@@ -7,7 +7,6 @@ $(function() {
         if (ignicion22 == '0') {
             $("#velocidad11").val('0');
             $('#velocidad11').attr('readonly', true);
-
         } else if (ignicion22 == '1') {
             $('#velocidad11').attr('readonly', false);
         }
@@ -20,9 +19,7 @@ $(function() {
     });
 
     $("#cbo_evento").on("change", function(e) {
-
         var seleccionado = $(e.target.selectedOptions).attr("accion");
-
         if (seleccionado == 'ninguno') {
             $("#row_campos-adicionales").css('display', 'none');
             $("#campos-adicionales").css('display', 'none');
@@ -34,22 +31,17 @@ $(function() {
         }
     });
 
-    
     $("#btnActualizar").click(function() {
         var fecha = $('#datetimepicker2').data("DateTimePicker");
         fecha.date(new Date());
     });
 
-    
-
     $(document).on('keyup', '#tipo_safe', function(event) {
         let max = parseInt(this.max);
         let valor = parseInt(this.value);
         if (valor > max) {
-
             this.value = max;
         }
-
     });
 
     //valores de 0 a su max
@@ -59,10 +51,9 @@ $(function() {
         let valor = parseInt(this.value);
         if (valor > max) {
             this.value = max;
-
         }
     });
-    
+
     //valores de 1 a su max
     $(document).on('keyup', '#reglaId,#numero,#cantidadCombustible,#numerodeInput,#parametroId,#valor', function(event) {
         let max = parseInt(this.max);
@@ -75,8 +66,6 @@ $(function() {
         }
     });
 });
-
-
 //Servicios
 function enviar() {
     var urlSrv = properties.url + "trama/svr/enviar";
@@ -84,12 +73,7 @@ function enviar() {
     var ip = $("#ipservidor").val();
     var puertoservidor = $("#puertoservidor").val();
     var obc1 = $("#obc1").val();
-    
-    
     var fecha = $('#datetimepicker2').data("DateTimePicker").date().add(5, "hours").format("YYMMDDHHmmss");
-
-
-
     var cbo_evento1 = $("#cbo_evento").val();
     var velocidad1 = $("#velocidad11").val();
     var ignicionid1 = $("#ignicionid").val();
@@ -98,9 +82,7 @@ function enviar() {
     var rumbo1 = $("#rumbo1").val();
     var ondometro1 = $("#ondometro1").val();
     var altitud1 = $("#altitud1").val();
-
     var adicionales_cont = $("#row_campos-adicionales").children('div');
-
     var adicionales = {};
 
     adicionales_cont.each(function(i, el) {
@@ -122,8 +104,6 @@ function enviar() {
             adicionales = JSON.parse(jsonAttr.replace(',}', "}"));
         }
     });
-
-
     var data = {
         ip: ip,
         port: puertoservidor,
@@ -149,24 +129,20 @@ function enviar() {
     });
 }
 
-
 $("#enviardato").click(function(event) {
     $("#btnVerLog").removeClass("btn btn-primary").addClass("btn btn-primary active-button-log");
     $("#btnFlecha").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
     $("#contenedorLog").removeClass("panel panel-primary").addClass("panel panel-primary active-log");
-    
+
 });
 
 function download(filename, text) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', filename);
-
     element.style.display = 'none';
     document.body.appendChild(element);
-
     element.click();
-
     document.body.removeChild(element);
 }
 
@@ -178,22 +154,18 @@ $(document).ready(function() {
         var hijos = panel_body[0].children;
         var anchor = document.querySelector("#guardar");
 
-
         for (var hijo of hijos) {
             tramas += hijo.innerText + "\r\n";
         }
-
         if (tramas != "") {
             download("trama.csv", tramas);
         } else {
             alert(" error");
-
         }
     });
 
     $("#limpiar_campo").click(function(event) {
         $("#contenedor_log").empty();
     });
-
 
 });
