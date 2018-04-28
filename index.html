@@ -1,0 +1,637 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Simulador</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+
+        <link rel="stylesheet"  href="libs/leaflet/leaflet.css">     
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="libs/bootstrap/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <link rel="stylesheet" href="libs/bootstrap-datetimepicker/eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+        <link rel="stylesheet" href="libs/bootstrap-datetimepicker/eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <style type="text/css">
+             #panel-trama > .panel-body{overflow: auto !important;}
+            .trama-response{ border-bottom: : 1px solid #ddd;font-size: 13px;}
+            .row{padding-left: 15px; padding-right: 15px;}  
+            .panel{padding: 0px;}
+        </style>
+    </head>
+
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!--<div class="header-container">
+        </div>
+        <div class="main-container">
+        <dir class="contenedorderecho">
+        </dir>
+        </div>  
+        </div>
+        </nav>#main-container -->
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Simulador</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">                        
+                        <!-- <li><a href="#">Help</a></li> -->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--Mapa-->
+        <div id="map" style="position: fixed; height: 100%; width: 100%; margin-top: 50px;" ></div>
+        <!--Controles-->
+        <div id="btnVerFormulario" class="btn btn-primary active-button" >
+            <span class="glyphicon glyphicon-chevron-right" style=""></span>
+
+        </div>
+        <div id="contenedorFormulario" class="panel panel-primary active">
+            <div class="panel-heading">SVR</div>
+            <form class="panel-body" action="" method="POST" role="form" style="overflow-y: auto; max-height: 90%;">
+
+                <div  class="panel panel-primary col-xs-12">
+                                             
+                    <div id="row_campos-obligatorios" class="panel-body text-center" role=""  aria-expanded="false" style="height: 20px;">
+                        <div class="col-xs-12  ">
+                            <div class="form-group row">
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 10px;text-align:  left;" class="col-sm-2 col-form-label">Ip:</label>
+                                <div class="col-sm-4" style="padding-left: 0px;">
+                                    <input type="text" value="192.168.100.10" class="form-control" id="ipservidor">
+                                </div>
+                                <label style="font-weight: normal;font-size: 13px;padding-top: 10px;" class="col-sm-2 col-form-label">Puerto:</label>
+                                <div class="col-sm-3" style="padding-left:  0px;">
+                                    <input type="text" value="20500" class="form-control" id="puertoservidor">
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="col-xs-12  ">
+                            <div class="form-group row">
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;text-align:  left;" class="col-sm-2 col-form-label">OBC:</label>
+                                <div class="col-sm-5" style="padding-left:  0px;">
+                                    <input type="text" class="form-control" id="obc1" placeholder="Ultimo ingresado">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;text-align:  left;" class="col-sm-2 col-form-label">Fecha y Hora:</label>
+                                <div class="col-sm-7" style="padding-left:  0px;">
+                                    <div class="input-group date" id="datetimepicker2">
+                                        <input type="text" class="form-control" id="fechahora">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar">
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                               <div class="col-sm-2" style="padding-left:  0px;">
+                                    <div id="btnActualizar" class="btn btn-primary active-button">
+                                    <span  class="glyphicon glyphicon-refresh" style=""></span>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-xs-12  ">
+
+                            <div class="form-group row" "="">
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;text-align:  left;" class="col-sm-2 col-form-label">Velocidad:</label>
+                                <div class="col-sm-3" style="padding-left:  0px;">
+                                    <input type="text" class="form-control" id="velocidad11" value="0" placeholder="">
+                                </div>
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;text-align:  left;" class="col-sm-2 col-form-label">Ignición:</label>
+                                <div id="ignicionvalue" class="col-sm-3" style="padding-left:  0px;">
+                                    <select id="ignicionid" class="form-control" name="size">
+                                        <option value="1">ON</option>
+                                        <option value="0">OFF</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-xs-12  ">
+
+                            <div class="form-group row">
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;text-align:  left;" class="col-sm-2 col-form-label">Latitud:</label>
+                                <div class="col-sm-4" style="padding-left:  0px;">
+                                    <input type="text" class="form-control" id="latitud1" placeholder="" readonly="">
+                                </div>
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;text-align:  left;" class="col-sm-2 col-form-label">Longitud:</label>
+                                <div class="col-sm-4" style="padding-left:  0px;">
+                                    <input type="text" class="form-control" id="longitud1" placeholder="" readonly="">
+                                </div>
+                            </div>
+                            
+                                
+                        </div>
+                        <div class="col-xs-12  ">
+                            <div class="form-group row">
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;text-align:  left;" class="col-sm-2 col-form-label">Rumbo:</label>
+                                <div class="col-sm-3" style="width: 90px;padding-left:  0px;">
+                                    <input type="number" min="0" max="360" class="form-control" id="rumbo1" placeholder="" value="0">
+                                </div>
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;width: 65px;padding-left: 0px;" class="col-sm-1 col-form-label">Odómetro:</label>
+                                <div class="col-sm-3" style="width: 100px;">
+                                    <input type="text" class="form-control" id="ondometro1" placeholder="" value="0">
+                                </div>
+                                <label for="colFormLabel" style="font-weight: normal;font-size: 13px;padding-top: 8px;padding-left: 0px;" class="col-sm-1 col-form-label">Altitud:</label>
+                                <div class="col-sm-2" >
+                                    <input type="text" class="form-control" id="altitud1" placeholder="" value="0">
+                                </div>
+                            
+                            </div>
+                           
+                                
+                        </div>
+                        <div class="col-xs-12  ">
+                            <div class="form-group row">
+                                <label for="colFormLabel" class="col-sm-2 col-form-label" style="padding-top: 8px;text-align: left;">Evento:</label>
+                                <div class="col-sm-8" style="padding-left:  0px;">
+                                    <select class="form-control" name="size" id="cbo_evento">
+                                        <option selected="true" disabled="disabled">Seleccione Evento</option>
+                                        <option value="1" accion="ninguno">Posición Normal</option>
+                                        <option value="4" accion="ninguno">Ignition ON</option>
+                                        <option value="5" accion="ninguno">Ignition OFF</option>
+                                        <option value="15" accion="on-valor-1-4">Input ON</option>
+                                        <option value="14" accion="of-valor-1-4">Input OFF</option>
+                                        <option value="19" accion="ninguno">Inmobilizar Armed</option>
+                                        <option value="20" accion="driver-max10">Inmobilizer Disarmed</option>
+                                        <option value="21" accion="ninguno">Inmobilizar No Match</option>
+                                        <option value="3307137" accion="safe-campo">Safe</option>
+                                        <option value="3307143" accion="safe-accidente-campo">Safe Accidente</option>
+                                        <option value="3307144" accion="tipo-A-P">Safe Mala Conducta</option>
+                                        <option value="3309" accion="fuel-campo">Fuel</option>
+                                        <option value="3313" accion="tipo-off-on">Expansor de Inputs</option>
+                                        <option value="3318" accion="parametroid-1-19">CanBus</option>
+                                        <option value="3319" accion="reglaid-1-11">CanBus Evento</option>
+                                        <option value="3320" accion="mobileye-campo">Mobileye</option>
+                                        <option value="34" accion="numero-1-9">Driver Destination</option>
+                                        <option value="35" accion="ninguno">Inmobilizer Violation</option>
+                                        <option value="36" accion="ninguno">Pánico</option>
+                                        <option value="38" accion="numero-telefono">Voice Call Started</option>
+                                        <option value="39" accion="duracion-segundos">Voice Call End</option>
+                                        <option value="41" accion="accidente-campo">Accidente</option>
+                                        <option value="47" accion="llave">Dallas Key</option>
+                                        <option value="80" accion="output-activo-1-4">Output Activo</option>
+                                        <option value="81" accion="output-inactivo-1-4">Output Inactivo</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="campos-adicionales" class="panel panel-primary col-xs-12" style="display: none;">
+                    <!--div id="row_campos-obligatorios_head" class="panel-heading collapsed" role="button" data-toggle="collapse" data-parent="#campos-adicionales" href="#row_campos-adicionales" aria-expanded="false" aria-controls="coll_obligatorios" >
+                        campos-adicionales
+                    </div-->   
+                                               
+                    <div id="row_campos-adicionales" class="panel-body text-center collapse" role="tabpanel" style="height: 30px; display: none;">                       
+                        <div id="on-valor-1-4" class="col-xs-12  panel panel-primary">
+                            <div class="form-group row ">
+                                <div class="col-sm-2" style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px;" class="col-sm-2 col-form-label">Número:</label>
+                                </div>
+                                <div class="col-sm-3" style="padding-top: 12px">
+                                    <input id="numero" name="" type="number" min="1" max="4" class="form-control">
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="of-valor-1-4" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row">
+                                <div class="col-sm-2" style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px;" class="col-sm-4 col-form-label">Número:</label>
+                                </div>
+                                <div class="col-sm-3" style="padding-top: 12px">
+                                    <input id="numero" type="number" name="" min="1" max="4" class="form-control">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="driver-max10" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row">
+                                <div class="col-sm-2" style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px;" class="col-sm-4 col-form-label">DriverID:</label>
+                                </div>
+                                <div class="col-sm-4" style="padding-top: 12px">
+                                    <input id="driverId" type="text" name="" maxlength="10" class="form-control">
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="safe-campo" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row">
+                                <div class="col-sm-2" style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px;" class="col-sm-2 col-form-label">Tipo:</label>
+                                </div>
+                                <div class="col-sm-8" style="padding-top: 12px">
+                                    <select class="form-control" id="tipo" name="size">
+                                        <option selected="true" disabled="disabled">Seleccione Tipo</option>
+                                        <option value="0" >ACCIDENTE</option>
+                                        <option value="1" >ACELERACION</option>
+                                        <option value="2" >FRENADA</option>
+                                        <option value="3" >GIRO A LA IZQUIERDA</option>
+                                        <option value="4" >GIRO A LA DERECHA</option>
+                                        <option value="5" >GIRO AMPLIO A LA IZQUIERDA</option>
+                                        <option value="6" >GIRO AMPLIO A LA DERECHA</option>
+                                        <option value="7" >GIRO IZQUIERDA FRENANDO</option>
+                                        <option value="8" >GIRO IZQUIERDA ACELERANDO</option>
+                                        <option value="9" >GIRO AMPLIO IZQUIERDA FRENANDO</option>
+                                        <option value="10" >GIRO AMPLIO IZQUIERDA ACELERANDO</option>
+                                        <option value="11" >GIRO DERECHA FRENANDO</option>
+                                        <option value="12" >GIRO DERECHA ACELERANDO</option>
+                                        <option value="13" >GIRO AMPLIO DERECHA FRENANDO</option>
+                                        <option value="14" >GIRO AMPLIO DERECHA ACELERANDO</option>
+                                        <option value="15" >INGRESO A OVALO</option>
+                                        <option value="16" >CAMBIO DE CARRIL</option>
+                                        <option value="17" >SOBRE PASAR</option>
+                                        <option value="18" >ROMPEMUELLES</option>
+                                        <option value="19" >INICIO DE TROCHA</option>
+                                        <option value="20" >FIN DE TROCHA</option>
+                                        <option value="21" >CONDUCTA AGRESIVA</option>
+                                        <option value="22" >CONDUCTA PELIGROSA</option>
+                                    </select>
+                                </div>                                                          
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3" style="padding-top: 20px;">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px;/* padding-left: 0px */" class="col-sm-4 col-form-label">Duración(segundos):</label>
+                                </div>
+                                <div class="col-sm-3" style="padding-top: 12px;/* padding-left:  0px; */">
+                                    <input type="number" name="" id="duracion" value="10" class="form-control">
+                                </div>                                                         
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-sm-2" style="padding-right:  0px;">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px;">Fuerza X:</label>
+                                </div>
+                                <div class="col-sm-2" style="padding-left:  0px;">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaX" class="form-control">
+                                </div>                                                           
+                            
+                                <div class="col-sm-2" style="/* padding-left: 0px; */">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px;" class="">Fuerza Y:</label>
+                                </div>
+                                <div class="col-sm-2" style="padding-left:  0px;">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaY" class="form-control">
+                                </div>                                                           
+                            
+                                <div class="col-sm-2" style="/* padding-left:  0px; */">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px;" class="">Fuerza Z:</label>
+                                </div>
+                                <div class="col-sm-2" style="padding-left:  0px;">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaZ" class="form-control">
+                                </div>                                                           
+                            </div>
+                    </div>
+                    <div id="safe-accidente-campo" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row">
+                                <div class="col-sm-2"  style="padding-top: 20px;">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Fuerza X:</label>
+                                </div>
+                                <div class="col-sm-2"  style="padding-top: 12px">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaX" class="form-control" >
+                                </div>                                                           
+                            
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Fuerza Y:</label>
+                                </div>
+                                <div class="col-sm-2"  style="padding-top: 12px">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaY" class="form-control" >
+                                </div>                                                           
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Fuerza Z:</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaZ" class="form-control" >
+                                </div>                                                           
+                            
+                                <div class="col-sm-2" style="padding-top: 10px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Dirección:</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="number" min="0" max="360" name="" id="direccion" class="form-control" >
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="tipo-A-P" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row " >
+                                <div class="col-sm-2" style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Tipo:</label>
+                                </div>
+                                <div class="col-sm-3"  style="padding-top: 12px" >
+                                    <select id="tipo" class="form-control" name="size"> 
+                                        <option value="1" >Agresiva</option>
+                                        <option value="2" >Peligrosa</option>
+                                    </select>
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="fuel-campo" class="col-xs-12 panel panel-primary">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Tipo:</label>
+                                </div>
+                                <div class="col-sm-3"  style="padding-top: 12px">
+                                    <select id="tipo" class="form-control">
+                                        <option value="83" >Sustracción</option>
+                                        <option value="84" >Llenado</option>
+                                    </select>
+                                </div>                                                           
+                            
+                                <div class="col-sm-2"   style="padding-top: 5px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-2 col-form-label">Cantidad Combustible (gal):</label>
+                                </div>
+                                <div class="col-sm-3"   style="padding-top: 12px">
+                                    <input type="number" min="1" max="30" name="" id="cantidadCombustible" class="form-control" >
+                                </div>                                                           
+                            </div>
+
+                        </div>
+                        <div id="tipo-off-on" class="col-xs-12 panel panel-primary">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Tipo:</label></div>
+                                <div class="col-sm-3"  style="padding-top: 12px">
+                                    <select id="tipo" class="form-control">
+                                        <option value="0" >Off</option>
+                                        <option value="1" >On</option>
+                                    </select>
+                                </div>                                                           
+                           
+                                <div class="col-sm-2"  style="padding-top: 5px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-2 col-form-label">Número de Input:</label>
+                                </div>
+                                <div class="col-sm-3"   style="padding-top: 12px">
+                                    <input type="number" min="1" max="7" name="" id="numero" class="form-control" >
+                                </div>                                                           
+                            </div>
+
+                        </div>
+
+                        <div id="parametroid-1-19" class="col-xs-12 panel panel-primary">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Parámetro Id:</label>
+                                </div>
+                                <div class="col-sm-3"  style="padding-top: 12px">
+                                    <input type="number" min="1" max="19" id="parametroId" class="form-control" name="">
+                                </div>                                                           
+                            
+                                <div class="col-sm-1"   style="padding-top: 20px;padding-left: 0px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Valor:</label>
+                                </div>
+                                <div class="col-sm-3"   style="padding-top: 12px">
+                                    <input type="number" min="1" max="99999" id="valor"  name="" class="form-control" >
+                                </div>                                                           
+                            </div>
+
+                        </div>
+                        <div id="reglaid-1-11" class="col-xs-12 panel panel-primary">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Regla Id:</label></div>
+                                <div class="col-sm-3"  style="padding-top: 12px">
+                                    <input type="number" min="1" max="11" id="reglaId" class="form-control" name="">
+                                </div> 
+                                <div class="col-sm-3"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-2 col-form-label">Duración(segundos):</label>
+                                </div>
+                                <div class="col-sm-2"   style="padding-top: 12px">
+                                    <input type="text" value="10" id="duracion" name="" type="text" class="form-control" >
+                                </div>                                                           
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Tipo:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select id="tipo" class="form-control">
+                                        <option value="3">Inicio</option>
+                                        <option value="2">Cierre</option>
+                                    </select>
+                                </div>                                                           
+                            </div>
+                        </div>
+
+                        <div id="mobileye-campo" class="col-xs-12 panel panel-primary">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Regla Id:</label>
+                                </div>
+                                <div class="col-sm-3"  style="padding-top: 12px">
+                                    
+                                     <select class="form-control" id="reglaId" name="size">
+                                        <option selected="true" disabled="disabled">Seleccione</option>
+                                        <option value="51" >CAMBIO CARRIL IZQUIERDA</option>
+                                        <option value="52" >CAMBIO CARRIL DERECHA</option>
+                                        <option value="53" >COLISION FRONTAL</option>
+                                        <option value="54" >ALERTA DE PROXIMIDAD</option>
+                                        <option value="56" >EXCESO DE VELOCIDAD</option>
+                                        <option value="57" >COLISION DE PEATONES</option>
+                                     </select>
+                                </div>
+                                <div class="col-sm-3" style="padding-top: 20px;padding-left: 0px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-2 col-form-label">Duración(segundos):</label>
+                                </div>
+                                <div class="col-sm-2" style="padding-top: 12px">
+                                    <input type="text" min="0" max="360" name="" type="text" value="10" id="duracion" class="form-control" >
+                                </div>                                                               
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Tipo:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select id="tipo" class="form-control">
+                                        <option value="3">Inicio</option>
+                                        <option value="2">Cierre</option>
+                                    </select>
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="numero-1-9" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row" >
+                                <div class="col-sm-2" style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Número:</label>
+                                </div>
+                                <div class="col-sm-3"  style="padding-top: 12px" >
+                                    <input type="number" min="1" max="9" name="" id="numero" class="form-control" >
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="numero-telefono" class="col-xs-12 panel panel-primary">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12pxpadding-left: 18px"  class="col-sm-0 col-form-label">Número de Teléfono:</label>
+                                </div>
+                                <div class="col-sm-4"  style="padding-top: 12px">
+                                    <input type="text" id="nroTelefono" class="form-control" name="">
+                                </div>   
+
+                                <div class="col-sm-1"   style="padding-top: 20px;padding-left: 0px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Tipo:</label>
+                                </div>
+                                <div class="col-sm-3"  style="padding-top: 12px">
+                                    <select id="tipo" class="form-control">
+                                        <option value="0">Entrada</option>
+                                        <option value="1">Salida</option>
+                                    </select>
+                                </div>                                                            
+                            </div>        
+                        </div>
+                        <div id="duracion-segundos" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row">
+                                <div class="col-sm-3" style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-2 col-form-label">Duración(segundos):</label>
+                                </div>
+                                <div class="col-sm-2" style="padding-top: 12px" >
+                                    <input type="text" min="0" max="360" name="" id="duracion" value="10" type="text" class="form-control" >
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="accidente-campo" class="col-xs-12 panel panel-primary">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2"  style="padding-top: 20px;">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Fuerza X:</label>
+                                </div>
+                                <div class="col-sm-2"  style="padding-top: 12px">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaX" class="form-control" >
+                                </div>                                                           
+                            
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Fuerza Y:</label>
+                                </div>
+                                <div class="col-sm-2"  style="padding-top: 12px">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaY" class="form-control" >
+                                </div>                                                           
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Fuerza Z:</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="number" min="0" max="100" name="" id="fuerzaZ" class="form-control" >
+                                </div>                                                           
+                            
+                                <div class="col-sm-2" style="padding-top: 10px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Dirección:</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="number" min="0" max="360" name="" id="direccion" class="form-control" >
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="llave" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row ">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Llave:</label>
+                                </div>
+                                <div class="col-sm-4" style="padding-top: 12px" >
+                                    <input type="text" name="" maxlength= "15" id="llave" class="form-control" >
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="output-activo-1-4" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row ">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Número:</label>
+                                </div>
+                                <div class="col-sm-3" style="padding-top: 12px" >
+                                    <input type="number" min="1" max="4" name="" id="numero"  class="form-control" >
+                                </div>                                                           
+                            </div>
+                        </div>
+                        <div id="output-inactivo-1-4" class="col-xs-12 panel panel-primary">
+                            <div class="form-group row ">
+                                <div class="col-sm-2"  style="padding-top: 20px">
+                                    <label for="colFormLabel" style="font-weight: normal;font-size: 12px"  class="col-sm-4 col-form-label">Número:</label>
+                                </div>
+                                <div class="col-sm-3" style="padding-top: 12px" >
+                                    <input type="number" min="1" max="4" name="" id="numero"  class="form-control" >
+                                </div>                                                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="row">
+                    <button type="button" id="enviardato" class="btn btn-primary col-xs-12" onclick="enviar()">Enviar</button>
+                </div>
+        
+            </form>
+        </div> 
+        <!--logs-->
+        <div id="btnVerLog" class="btn btn-primary" >
+            <span id="btnFlecha" class="glyphicon glyphicon-chevron-up" style=""></span>
+        </div>
+        <div id="contenedorLog" class="panel panel-primary">
+            <div class="panel-heading">
+                <span>Log</span>
+                <div class="opciones-log">
+                    <div class="boton">
+                        <button type="button" class="btn btn-primary btn-md" 
+                        id="limpiar_campo">Limpiar</button>
+                    </div>
+                    <div class="boton">
+                        <a class="btn btn-primary btn-md" id="guardar">Guardar</a>
+                    </div>
+                </div> 
+            </div>
+
+            <div class="panel-body" id="contenedor_log">
+                
+            </div>
+        </div>
+        <!-- MAPA LEAFLET -->
+        <script type="text/javascript" src="libs/leaflet/leaflet.js"></script>
+        <!-- MODERNAIZER -->
+        <script type="text/javascript" src="libs/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <!-- JQUERY -->
+        <script type="text/javascript" src="libs/jquery/jquery-3.2.1.min.js"></script>
+        <!-- BOOTSTRAP -->
+        <script type="text/javascript" src="libs/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DATE PICKER -->
+        <script type="text/javascript" src="libs/bootstrap-datetimepicker/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="libs/bootstrap-datetimepicker/eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+        <script type="text/javascript"  src="properties.json"></script>
+        <script type="text/javascript"  src="js/mapa.js"></script>            
+        <script type="text/javascript"  src="js/main.js"></script>
+        <script type="text/javascript"  src="js/controlUI.js"></script>
+        <script type="text/javascript"  src="js/general.js"></script>
+        
+    </body>
+</html>
