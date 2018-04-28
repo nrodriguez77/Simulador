@@ -1,0 +1,107 @@
+*::-webkit-scrollbar{width: 5px; height: 5px; background-color: #ddd;}
+*::-moz-scrollbar{width: 5px; height: 5px; background-color: #ddd;}
+*::-o-scrollbar{width: 5px; height: 5px; background-color: #ddd;}
+*::-ms-scrollbar{width: 5px; height: 5px; background-color: #ddd;}
+
+*::-webkit-scrollbar-thumb{background-color: #003d39;}
+*::-moz-scrollbar-thumb{background-color: #003d39;}
+*::-o-scrollbar-thumb{background-color: #003d39;}
+*::-ms-scrollbar-thumb{background-color: #003d39;}
+
+.log_error{
+	color:#FF0000;
+}
+.log_ok{
+	color:#000000;
+}
+
+#btnVerFormulario{
+    position: fixed;
+    margin-top: 60px;
+    right: 8px;
+    transition-duration: 0.8s;           
+}
+#btnVerLog{
+    position: fixed;
+    left: 8px;
+    bottom: 8px;
+    transition-duration: 0.8s;           
+}
+#contenedorFormulario{
+    position: fixed;
+    margin-top: 60px;
+    right: -40%;
+    height: 92%;
+    width: 40%;
+    background-color: rgba(255, 255, 255, 0.63);
+    transition: 0.8s; 
+    
+}
+#contenedorLog{
+    position: fixed;    
+    left:  	8px;
+    width: 	58.5%;
+    height: 300px;
+    bottom: -320px;
+    background-color: rgba(255, 255, 255, 0.63);
+    transition: 0.8s; 
+    
+}
+
+#contenedorLog .panel-body{
+    overflow: auto;
+    padding: 5px;
+    height: 256.5px; 
+}
+#contenedorLog .panel-body .row {width: fit-content;}
+#contenedorLog .panel-body .row:nth-child(even) {background-color: #98faff;} 
+#contenedorFormulario .panel-body, #contenedorLog .panel-body{
+    background-color: transparent;
+}
+
+
+
+.active{
+    right: 1px !important;
+}
+
+.active-button{
+    right: 41% !important;
+}
+
+.active-log{
+	bottom: -13px !important;
+}
+
+.active-button-log{
+	bottom: 315px !important;
+}
+
+@media screen and (max-width:500px){
+	#contenedorFormulario{
+	    position: fixed;
+	    margin-top: 60px;
+	    right: -85%;
+	    height: 90%;
+	    width: 85%;
+	    background-color: rgba(255, 255, 255, 0.63);
+	    transition: 0.8s;
+	}
+
+	.active-button{
+	    right: 86% !important;
+	}
+
+/*	.active-button-log{
+		bottom:  !important;
+	}*/
+}
+.boton{ 
+    display: inline;
+
+}
+.opciones-log{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
